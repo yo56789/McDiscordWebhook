@@ -17,9 +17,9 @@ public class ChatMixin {
     @Shadow
     public ServerPlayerEntity player;
 
-    @Inject(method="handleMessage", at=@At(value = "INVOKE", target="Lnet/minecraft/server/PlayerManager;broadcast(Lnet/minecraft/text/Text;Ljava/util/function/Function;Lnet/minecraft/network/MessageType;Ljava/util/UUID;)V"))
+    @Inject(method="handleMessage", at=@At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;broadcast(Lnet/minecraft/text/Text;Ljava/util/function/Function;Lnet/minecraft/network/MessageType;Ljava/util/UUID;)V"))
     public void chatMessage(TextStream.Message message, CallbackInfo ci) {
-        String data = WebhookHandler.assembleString(message.getRaw().replaceFirst("<[^>]+>", "").trim(), player.getDisplayName().asString());
+        String data = WebhookHandler.assembleString(message.getRaw().replaceFirst("<[^>]+>", "").trim(), player.getName().asString());
         WebhookHandler.post(Config.WEBHOOK_URI, data);
     }
 }

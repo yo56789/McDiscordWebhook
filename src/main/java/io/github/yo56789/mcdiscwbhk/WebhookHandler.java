@@ -16,7 +16,7 @@ public class WebhookHandler {
     public static void post(String uri, String data) {
         if (Objects.equals(uri, "") || !uri.startsWith("https://discord.com/api/webhooks/")) {
             if (!warnedWebhookInvalid) {
-                Main.LOGGER.warn("Invalid Webhook uri");
+                Main.LOGGER.warn("Invalid Webhook url");
                 warnedWebhookInvalid = true;
             }
             return;
