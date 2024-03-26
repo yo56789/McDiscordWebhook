@@ -1,5 +1,7 @@
 package io.github.yo56789.mcdiscwbhk;
 
+import io.github.yo56789.mcdiscwbhk.config.Config;
+
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -11,6 +13,10 @@ public class WebhookHandler {
 
     public static String assembleString(String message, String username) {
         return String.format("{\"content\":\"%s\", \"username\":\"%s\"}", message, username);
+    }
+
+    public static String assembleString(String message, String username, String uuid) {
+        return String.format("{\"content\":\"%s\", \"username\":\"%s\", \"avatar_url\":\"%s\"}", message, username, String.format(Config.USER_AVATAR_URL, uuid));
     }
 
     public static void post(String uri, String data) {
