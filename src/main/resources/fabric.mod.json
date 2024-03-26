@@ -3,20 +3,20 @@
   "id": "mcdiscwbhk",
   "version": "${version}",
 
-  "name": "Mc Discord Webhook",
+  "name": "McDiscordWebhook",
   "description": "Sends chat messages to a discord channel via webhook meaning no need for a bot!",
   "authors": [
     "yo56789"
   ],
   "contact": {
-    "homepage": "",
-    "sources": ""
+    "sources": "https://github.com/yo56789/McDiscordWebhook",
+    "issues": "https://github.com/yo56789/McDiscordWebhook/issues"
   },
 
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/mcdiscwbhk/icon.png",
 
-  "environment": "*",
+  "environment": "server",
   "entrypoints": {
     "server": [
       "io.github.yo56789.mcdiscwbhk.Main"
