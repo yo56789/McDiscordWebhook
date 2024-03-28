@@ -11,22 +11,26 @@ import java.util.regex.Pattern;
 
 public class WebhookHandler {
     private static boolean warnedWebhookInvalid = false;
-    static Pattern webhookRegexPattern = Pattern.compile("http.:\\/\\/discord\\.com\\/api\\/webhooks\\/.*\\/.*",
+    private static final Pattern webhookRegexPattern = Pattern.compile("http.://discord\\.com/api/webhooks/.*/.*",
             Pattern.CASE_INSENSITIVE);
 
-    // assembleMessage creates an embed depending on the mode
-    // if mode is message then String color is disregarded
     public static String assembleMessage(String message, String username, int color) {
-        if(message.isBlank()) return "";
+        if (message.isBlank()) {
+            return "";
+        } else if (Config.IS_EMBED_MODE) {
+            return assembleEmbed(message, username, color);
+        }
 
-        if(Config.IS_EMBED_MODE) return assembleEmbed(message, username, color);
         return String.format("{\"content\":\"%s\", \"username\":\"%s\"}", message, username);
     }
 
     public static String assembleMessage(String message, String username, int color, String uuid) {
-        if(message.isBlank()) return "";
+        if (message.isBlank()) {
+            return "";
+        } else if (Config.IS_EMBED_MODE) {
+            return assembleEmbed(message, username, color, uuid);
+        }
 
-        if(Config.IS_EMBED_MODE) return assembleEmbed(message, username, color, uuid);
         return String.format("{\"content\":\"%s\", \"username\":\"%s\", \"avatar_url\":\"%s\"}", message, username, String.format(Config.USER_AVATAR_URL, uuid));
     }
 
@@ -57,7 +61,7 @@ public class WebhookHandler {
         try {
             client.send(request, HttpResponse.BodyHandlers.discarding());
         } catch (Exception e) {
-            Main.LOGGER.warn("Failed to send webhook");
+            Main.LOGGER.error("Failed to send webhook");
         }
     }
 }

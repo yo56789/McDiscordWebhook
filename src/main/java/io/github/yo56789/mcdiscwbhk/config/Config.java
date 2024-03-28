@@ -3,7 +3,43 @@ package io.github.yo56789.mcdiscwbhk.config;
 import io.github.yo56789.mcdiscwbhk.Main;
 
 public class Config {
-    static final String defaultConfig = "# Discord webhook URI\n# How to get a webhook: https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks\nwebhook-uri=\n\n# Server name\n# Can be set to anything, and shows for server-related events\nserver-webhook-name=Server\n\n# User avatar provider\n# Replace the part where the UUID is located with %s\nuser-avatar-url=https://mc-heads.net/avatar/%s\n\n# Webhook mode\n# Type \"message\" or \"embed\"\n# \"message\" only sends raw text messages. \"embed\" sends content in embeds\nwebhook-mode=message\n\n# Events (Leave blank to ignore event)\n\n# Server starting\nevent-server-starting=Server starting\n\n# Server started\nevent-server-started=Server started\n\n# Server stopping\nevent-server-stopping=Server stopping\n\n# Server stopped\nevent-server-stopped=Server stopped\n\n# Player join\nevent-player-join=%s joined\n\n# Player leave\nevent-player-leave=%s left";
+    static final String defaultConfig = """
+            # Discord webhook URI
+            # How to get a webhook: https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
+            webhook-uri=
+
+            # Server name
+            # Can be set to anything, and shows for server-related events
+            server-webhook-name=Server
+
+            # User avatar provider
+            # Replace the part where the UUID is located with %s
+            user-avatar-url=https://mc-heads.net/avatar/%s
+
+            # Webhook mode
+            # Type "message" or "embed"
+            # "message" only sends raw text messages. "embed" sends content in embeds
+            webhook-mode=message
+
+            # Events (Leave blank to ignore event)
+
+            # Server starting
+            event-server-starting=Server Starting!
+
+            # Server started
+            event-server-started=Server Started!
+
+            # Server stopping
+            event-server-stopping=Server Stopping!
+
+            # Server stopped
+            event-server-stopped=Server Stopped!
+
+            # Player join
+            event-player-join=%s joined!
+
+            # Player leave
+            event-player-leave=%s left!""";
 
 
     static SimpleConfig config = SimpleConfig.of("mcdiscwbhk").provider((String name) -> defaultConfig).request();
@@ -16,19 +52,19 @@ public class Config {
     public static final boolean IS_EMBED_MODE = config.getOrDefault("webhook-mode", "message").equalsIgnoreCase("embed");
 
     // Events - Server Lifecycle
-    public static final String EVENT_SERVER_STARTING = config.getOrDefault("event-server-starting", "Server starting");
-    public static final String EVENT_SERVER_STARTED = config.getOrDefault("event-server-started", "Server started");
-    public static final String EVENT_SERVER_STOPPING = config.getOrDefault("event-server-stopping", "Server stopping");
-    public static final String EVENT_SERVER_STOPPED = config.getOrDefault("event-server-stopped", "Server stopped");
+    public static final String EVENT_SERVER_STARTING = config.getOrDefault("event-server-starting", "Server Starting!");
+    public static final String EVENT_SERVER_STARTED = config.getOrDefault("event-server-started", "Server Started!");
+    public static final String EVENT_SERVER_STOPPING = config.getOrDefault("event-server-stopping", "Server Stopping!");
+    public static final String EVENT_SERVER_STOPPED = config.getOrDefault("event-server-stopped", "Server Stopped!");
 
     // Events - Player interaction
-    public static final String EVENT_PLAYER_JOIN = config.getOrDefault("event-player-join", "%s joined");
-    public static final String EVENT_PLAYER_LEAVE = config.getOrDefault("event-player-leave", "%s left");
+    public static final String EVENT_PLAYER_JOIN = config.getOrDefault("event-player-join", "%s joined!");
+    public static final String EVENT_PLAYER_LEAVE = config.getOrDefault("event-player-leave", "%s left!");
 
     public static void init() {
         // Protection in-case logs are shared.
         // Many log-sharing websites don't recognise links as something that should be filtered.
-        Main.LOGGER.info("Webhook URL: " + WEBHOOK_URI.substring(0, 60).concat("*************************************"));
+        Main.LOGGER.info("Webhook URL: " + (!WEBHOOK_URI.isEmpty() ? WEBHOOK_URI.substring(0, 60).concat("*************************************") : ""));
         Main.LOGGER.info("Launched in " + (IS_EMBED_MODE ? "embed" : "message") + " mode");
     }
 }
