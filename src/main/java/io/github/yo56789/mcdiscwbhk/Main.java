@@ -21,23 +21,33 @@ public class Main implements DedicatedServerModInitializer {
 	public void onInitializeServer() {
 		Config.init();
 
+		ServerLifecycleEvents.SERVER_STARTING.register((MinecraftServer server) -> {
+			String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STARTING, Config.SERVER_NAME, 2786829);
+			WebhookHandler.post(Config.WEBHOOK_URI, data);
+		});
+
 		ServerLifecycleEvents.SERVER_STARTED.register((MinecraftServer server) -> {
-			String data = WebhookHandler.assembleString("Server Started!", Config.SERVER_NAME);
+			String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STARTED, Config.SERVER_NAME, 65344);
+			WebhookHandler.post(Config.WEBHOOK_URI, data);
+		});
+
+		ServerLifecycleEvents.SERVER_STOPPING.register((MinecraftServer server) -> {
+			String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STOPPING, Config.SERVER_NAME, 12910592);
 			WebhookHandler.post(Config.WEBHOOK_URI, data);
 		});
 
 		ServerLifecycleEvents.SERVER_STOPPED.register((MinecraftServer server) -> {
-			String data = WebhookHandler.assembleString("Server Stopped!", Config.SERVER_NAME);
+			String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STOPPED, Config.SERVER_NAME, 16711680);
 			WebhookHandler.post(Config.WEBHOOK_URI, data);
 		});
 
 		ServerPlayConnectionEvents.JOIN.register((ServerPlayNetworkHandler handler, PacketSender sender, MinecraftServer server) -> {
-			String data = WebhookHandler.assembleString(handler.getPlayer().getName().asString() + " has joined!", Config.SERVER_NAME);
+			String data = WebhookHandler.assembleMessage(String.format(Config.EVENT_PLAYER_JOIN, handler.getPlayer().getName().asString()), Config.SERVER_NAME, 65344);
 			WebhookHandler.post(Config.WEBHOOK_URI, data);
 		});
 
 		ServerPlayConnectionEvents.DISCONNECT.register((ServerPlayNetworkHandler handler, MinecraftServer server) -> {
-			String data = WebhookHandler.assembleString(handler.getPlayer().getName().asString() + " has left!", Config.SERVER_NAME);
+			String data = WebhookHandler.assembleMessage(String.format(Config.EVENT_PLAYER_LEAVE, handler.getPlayer().getName().asString()), Config.SERVER_NAME, 16711680);
 			WebhookHandler.post(Config.WEBHOOK_URI, data);
 		});
 	}
