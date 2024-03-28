@@ -1,6 +1,6 @@
 # McDiscordWebhook
 
-McDiscordWebhook lets you integrate discord into your fabric server without the need of any extra bots.
+McDiscordWebhook integrates your discord server into your minecraft without using a bot.
 
 ![GitHub License](https://img.shields.io/github/license/yo56789/McDiscordWebhook)
 ![GitHub repo size](https://img.shields.io/github/repo-size/yo56789/McDiscordWebhook)
