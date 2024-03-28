@@ -13,14 +13,24 @@ public class Config {
     public static final boolean IS_EMBED_MODE = config.getOrDefault("webhook-mode", "message").equalsIgnoreCase("embed");
 
     // Events - Server Lifecycle
-    public static final String EVENT_SERVER_STARTING = config.getOrDefault("event-server-starting", "Server Starting!");
-    public static final String EVENT_SERVER_STARTED = config.getOrDefault("event-server-started", "Server Started!");
-    public static final String EVENT_SERVER_STOPPING = config.getOrDefault("event-server-stopping", "Server Stopping!");
-    public static final String EVENT_SERVER_STOPPED = config.getOrDefault("event-server-stopped", "Server Stopped!");
+    public static final boolean EVENT_SERVER_STARTING_ENABLED = config.getOrDefault("event-server-starting-enabled", false);
+    public static final String EVENT_SERVER_STARTING = config.getOrDefault("event-server-starting-message", "Server Starting!");
+
+    public static final boolean EVENT_SERVER_STARTED_ENABLED = config.getOrDefault("event-server-started-enabled", true);
+    public static final String EVENT_SERVER_STARTED = config.getOrDefault("event-server-started-message", "Server Started!");
+
+    public static final boolean EVENT_SERVER_STOPPING_ENABLED = config.getOrDefault("event-server-stopping-enabled", false);
+    public static final String EVENT_SERVER_STOPPING = config.getOrDefault("event-server-stopping-message", "Server Stopping!");
+
+    public static final boolean EVENT_SERVER_STOPPED_ENABLED = config.getOrDefault("event-server-stopped-enabled", true);
+    public static final String EVENT_SERVER_STOPPED = config.getOrDefault("event-server-stopped-message", "Server Stopped!");
 
     // Events - Player interaction
-    public static final String EVENT_PLAYER_JOIN = config.getOrDefault("event-player-join", "%s joined!");
-    public static final String EVENT_PLAYER_LEAVE = config.getOrDefault("event-player-leave", "%s left!");
+    public static final boolean EVENT_PLAYER_JOIN_ENABLED = config.getOrDefault("event-player-join-enabled", true);
+    public static final String EVENT_PLAYER_JOIN = config.getOrDefault("event-player-join-message", "%s joined!");
+
+    public static final boolean EVENT_PLAYER_LEAVE_ENABLED = config.getOrDefault("event-player-leave-enabled", true);
+    public static final String EVENT_PLAYER_LEAVE = config.getOrDefault("event-player-leave-message", "%s left!");
 
     public static void init() {
         // Protection in-case logs are shared.

@@ -4,7 +4,7 @@ public class DefaultConfig {
     public static final String DEFAULTCONFIG = """
             # Discord webhook URI
             # How to get a webhook: https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
-            webhook-uri=https://discord.com/api/webhooks/1221539658421244157/MHFQu9KUiV7xpiXIMIqo8_hs6eLNdMCtMVx92w3XavozhDLUqbD4TaT-e16hcbweACx9
+            webhook-uri=
                         
             # Server name
             # Can be set to anything, and shows for server-related events
@@ -17,26 +17,34 @@ public class DefaultConfig {
             # Webhook mode
             # Type "message" or "embed"
             # "message" only sends raw text messages. "embed" sends content in embeds
-            webhook-mode=embed
+            webhook-mode=message
                         
-            # Events (Leave blank to ignore event)
+            # Events
+            # Leaving blank will cause event to be disabled
                         
             # Server starting
-            event-server-starting=Server Starting!
+            event-server-starting-enabled=false
+            event-server-starting-message=Server Starting!
                         
             # Server started
-            event-server-started=Server Started!
+            event-server-started-enabled=true
+            event-server-started-message=Server Started!
                         
             # Server stopping
-            event-server-stopping=Server Stopping!
+            event-server-stopping-enabled=false
+            event-server-stopping-message=Server Stopping!
                         
             # Server stopped
-            event-server-stopped=Server Stopped!
+            event-server-stopped-enabled=true
+            event-server-stopped-message=Server Stopped!
                         
             # Player join
-            event-player-join=%s joined!
+            # %s = username of player
+            event-player-join-enabled=true
+            event-player-join-message=%s joined!
                         
             # Player leave
-            event-player-leave=%s left!
-            """;
+            # %s = username of player
+            event-player-leave-enabled=true
+            event-player-leave-message=%s left!""";
 }

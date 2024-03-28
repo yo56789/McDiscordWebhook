@@ -22,34 +22,46 @@ public class Main implements DedicatedServerModInitializer {
 	public void onInitializeServer() {
 		Config.init();
 
-		ServerLifecycleEvents.SERVER_STARTING.register((MinecraftServer server) -> {
-			String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STARTING, Config.SERVER_NAME, Colors.DARK_GREEN.colorCode);
-			WebhookHandler.post(Config.WEBHOOK_URI, data);
-		});
+		if (Config.EVENT_SERVER_STARTING_ENABLED) {
+			ServerLifecycleEvents.SERVER_STARTING.register((MinecraftServer server) -> {
+				String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STARTING, Config.SERVER_NAME, Colors.DARK_GREEN.colorCode);
+				WebhookHandler.post(Config.WEBHOOK_URI, data);
+			});
+		}
 
-		ServerLifecycleEvents.SERVER_STARTED.register((MinecraftServer server) -> {
-			String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STARTED, Config.SERVER_NAME, Colors.GREEN.colorCode);
-			WebhookHandler.post(Config.WEBHOOK_URI, data);
-		});
+		if (Config.EVENT_SERVER_STARTED_ENABLED) {
+			ServerLifecycleEvents.SERVER_STARTED.register((MinecraftServer server) -> {
+				String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STARTED, Config.SERVER_NAME, Colors.GREEN.colorCode);
+				WebhookHandler.post(Config.WEBHOOK_URI, data);
+			});
+		}
 
-		ServerLifecycleEvents.SERVER_STOPPING.register((MinecraftServer server) -> {
-			String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STOPPING, Config.SERVER_NAME, Colors.DARK_RED.colorCode);
-			WebhookHandler.post(Config.WEBHOOK_URI, data);
-		});
+		if (Config.EVENT_SERVER_STOPPING_ENABLED) {
+			ServerLifecycleEvents.SERVER_STOPPING.register((MinecraftServer server) -> {
+				String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STOPPING, Config.SERVER_NAME, Colors.DARK_RED.colorCode);
+				WebhookHandler.post(Config.WEBHOOK_URI, data);
+			});
+		}
 
-		ServerLifecycleEvents.SERVER_STOPPED.register((MinecraftServer server) -> {
-			String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STOPPED, Config.SERVER_NAME, Colors.RED.colorCode);
-			WebhookHandler.post(Config.WEBHOOK_URI, data);
-		});
+		if (Config.EVENT_SERVER_STOPPED_ENABLED) {
+			ServerLifecycleEvents.SERVER_STOPPED.register((MinecraftServer server) -> {
+				String data = WebhookHandler.assembleMessage(Config.EVENT_SERVER_STOPPED, Config.SERVER_NAME, Colors.RED.colorCode);
+				WebhookHandler.post(Config.WEBHOOK_URI, data);
+			});
+		}
 
-		ServerPlayConnectionEvents.JOIN.register((ServerPlayNetworkHandler handler, PacketSender sender, MinecraftServer server) -> {
-			String data = WebhookHandler.assembleMessage(String.format(Config.EVENT_PLAYER_JOIN, handler.getPlayer().getName().asString()), Config.SERVER_NAME, Colors.GREEN.colorCode);
-			WebhookHandler.post(Config.WEBHOOK_URI, data);
-		});
+		if (Config.EVENT_PLAYER_JOIN_ENABLED) {
+			ServerPlayConnectionEvents.JOIN.register((ServerPlayNetworkHandler handler, PacketSender sender, MinecraftServer server) -> {
+				String data = WebhookHandler.assembleMessage(String.format(Config.EVENT_PLAYER_JOIN, handler.getPlayer().getName().asString()), Config.SERVER_NAME, Colors.GREEN.colorCode);
+				WebhookHandler.post(Config.WEBHOOK_URI, data);
+			});
+		}
 
-		ServerPlayConnectionEvents.DISCONNECT.register((ServerPlayNetworkHandler handler, MinecraftServer server) -> {
-			String data = WebhookHandler.assembleMessage(String.format(Config.EVENT_PLAYER_LEAVE, handler.getPlayer().getName().asString()), Config.SERVER_NAME, Colors.RED.colorCode);
-			WebhookHandler.post(Config.WEBHOOK_URI, data);
-		});
+		if (Config.EVENT_PLAYER_LEAVE_ENABLED) {
+			ServerPlayConnectionEvents.DISCONNECT.register((ServerPlayNetworkHandler handler, MinecraftServer server) -> {
+				String data = WebhookHandler.assembleMessage(String.format(Config.EVENT_PLAYER_LEAVE, handler.getPlayer().getName().asString()), Config.SERVER_NAME, Colors.RED.colorCode);
+				WebhookHandler.post(Config.WEBHOOK_URI, data);
+			});
+		}
 	}
 }
