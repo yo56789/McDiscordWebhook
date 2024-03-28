@@ -3,46 +3,7 @@ package io.github.yo56789.mcdiscwbhk.config;
 import io.github.yo56789.mcdiscwbhk.Main;
 
 public class Config {
-    static final String defaultConfig = """
-            # Discord webhook URI
-            # How to get a webhook: https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
-            webhook-uri=
-
-            # Server name
-            # Can be set to anything, and shows for server-related events
-            server-webhook-name=Server
-
-            # User avatar provider
-            # Replace the part where the UUID is located with %s
-            user-avatar-url=https://mc-heads.net/avatar/%s
-
-            # Webhook mode
-            # Type "message" or "embed"
-            # "message" only sends raw text messages. "embed" sends content in embeds
-            webhook-mode=message
-
-            # Events (Leave blank to ignore event)
-
-            # Server starting
-            event-server-starting=Server Starting!
-
-            # Server started
-            event-server-started=Server Started!
-
-            # Server stopping
-            event-server-stopping=Server Stopping!
-
-            # Server stopped
-            event-server-stopped=Server Stopped!
-
-            # Player join
-            event-player-join=%s joined!
-
-            # Player leave
-            event-player-leave=%s left!""";
-
-
-    static SimpleConfig config = SimpleConfig.of("mcdiscwbhk").provider((String name) -> defaultConfig).request();
+    static SimpleConfig config = SimpleConfig.of("mcdiscwbhk").provider((String name) -> DefaultConfig.DEFAULTCONFIG).request();
 
     public static final String WEBHOOK_URI = config.getOrDefault("webhook-uri", "");
     public static final String SERVER_NAME = config.getOrDefault("server-webhook-name", "Server");
