@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "mcdiscwbhk",
+  "version": "${version}",
+
+  "name": "McDiscordWebhook",
+  "description": "Sends chat messages to a discord channel via webhook meaning no need for a bot!",
+  "authors": [
+    "yo56789"
+  ],
+  "contact": {
+    "sources": "https://github.com/yo56789/McDiscordWebhook",
+    "issues": "https://github.com/yo56789/McDiscordWebhook/issues"
+  },
+
+  "license": "MIT",
+  "icon": "assets/mcdiscwbhk/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "io.github.yo56789.mcdiscwbhk.Main"
+    ]
+  },
+  "mixins": [
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.19",
+    "fabric-api": "*",
+    "minecraft": "~1.19.4",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
