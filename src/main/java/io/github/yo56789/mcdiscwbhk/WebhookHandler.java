@@ -17,18 +17,21 @@ public class WebhookHandler {
     public static String assembleMessage(String message, String username, int color) {
         if (message.isBlank()) {
             return "";
-        } else if (Config.IS_EMBED_MODE) {
+        } else if (Config.WEBHOOK_MODE.equalsIgnoreCase("embed")) {
             return assembleEmbed(message, username, color);
+        } else if (Config.WEBHOOK_MODE.equalsIgnoreCase("list")) {
+            return assembleList(message, username);
         }
-
         return String.format("{\"content\":\"%s\", \"username\":\"%s\"}", message, username);
     }
 
     public static String assembleMessage(String message, String username, int color, String uuid) {
         if (message.isBlank()) {
             return "";
-        } else if (Config.IS_EMBED_MODE) {
+        } else if (Config.WEBHOOK_MODE.equalsIgnoreCase("embed")) {
             return assembleEmbed(message, username, color, uuid);
+        } else if (Config.WEBHOOK_MODE.equalsIgnoreCase("list")) {
+            return assembleList(message, username);
         }
 
         return String.format("{\"content\":\"%s\", \"username\":\"%s\", \"avatar_url\":\"%s\"}", message, username, String.format(Config.USER_AVATAR_URL, uuid));
@@ -40,6 +43,10 @@ public class WebhookHandler {
 
     static String assembleEmbed(String message, String username, int color, String uuid) {
         return String.format("{ \"content\": null, \"embeds\": [ { \"description\": \"%s\", \"color\": %s } ], \"username\": \"%s\", \"avatar_url\": \"%s\" }", message, color, username, String.format(Config.USER_AVATAR_URL, uuid));
+    }
+
+    static String assembleList(String message, String username) {
+        return String.format("{\"content\":\"%s\", \"username\":\"%s\"}", String.format(Config.CLASSIC_MESSAGE_FORMAT, username, message), Config.SERVER_NAME);
     }
 
     public static void post(String uri, String data) {

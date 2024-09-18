@@ -8,11 +8,13 @@ public class Config {
     public static final String WEBHOOK_URI = config.getOrDefault("webhook-uri", "");
     public static final String SERVER_NAME = config.getOrDefault("server-webhook-name", "Server");
     public static final String USER_AVATAR_URL = config.getOrDefault("user-avatar-url", "https://mc-heads.net/avatar/%s");
-    // This should just get the "webhook-mode" key and check if it equals "embed", this bool will be true if passed
-    // Example: if(IS_EMBED_MODE) /*embed stuff*/ else /*message stuff*/
-    public static final boolean IS_EMBED_MODE = config.getOrDefault("webhook-mode", "message").equalsIgnoreCase("embed");
+
+    public static final String WEBHOOK_MODE = verifyWebhookMode();
+    public static final String CLASSIC_MESSAGE_FORMAT = config.getOrDefault("list-message-format", "%s > %s");
 
     // Events - Server Lifecycle
+    public static final boolean EVENT_PLAYER_MESSAGE_ENABLED = config.getOrDefault("event-player-message-enabled", true);
+
     public static final boolean EVENT_SERVER_STARTING_ENABLED = config.getOrDefault("event-server-starting-enabled", false);
     public static final String EVENT_SERVER_STARTING = config.getOrDefault("event-server-starting-message", "Server Starting!");
 
@@ -35,7 +37,16 @@ public class Config {
     public static void init() {
         // Protection in-case logs are shared.
         // Many log-sharing websites don't recognise links as something that should be filtered.
-        Main.LOGGER.info("Webhook URL: " + (!WEBHOOK_URI.isEmpty() ? WEBHOOK_URI.substring(0, 60).concat("*************************************") : ""));
-        Main.LOGGER.info("Launched in " + (IS_EMBED_MODE ? "embed" : "message") + " mode");
+        Main.LOGGER.info("Webhook URL: " + (!WEBHOOK_URI.isEmpty() ? WEBHOOK_URI.substring(0, 35).concat("***************************************************") : ""));
+        Main.LOGGER.info("Launched in " + WEBHOOK_MODE + " mode");
+    }
+
+    private static String verifyWebhookMode() {
+        String mode = config.getOrDefault("webhook-mode", "message");
+        if (mode.equalsIgnoreCase("message") || mode.equalsIgnoreCase("embed") || mode.equalsIgnoreCase("list")) {
+            return mode;
+        }
+
+        return "message";
     }
 }
