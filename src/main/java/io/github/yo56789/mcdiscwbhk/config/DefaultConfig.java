@@ -15,12 +15,20 @@ public class DefaultConfig {
             user-avatar-url=https://mc-heads.net/avatar/%s
                         
             # Webhook mode
-            # Type "message" or "embed"
-            # "message" only sends raw text messages. "embed" sends content in embeds
+            # Options: "message", "embed" or "list"
+            # "message" sends messages with the bot using the persons mc username. "embed" sends everything in embeds. "list" sends messages like a list.
             webhook-mode=message
+            
+            # Format for sending messages in "list" mode
+            # First %s is username Second %s is message content
+            # Default: %s > %s
+            list-message-format=**%s** > %s
                         
             # Events
             # Leaving blank will cause event to be disabled
+                        
+            # Player Message
+            event-player-message-enabled=true
                         
             # Server starting
             event-server-starting-enabled=false
@@ -47,4 +55,5 @@ public class DefaultConfig {
             # %s = username of player
             event-player-leave-enabled=true
             event-player-leave-message=%s left!""";
+
 }
