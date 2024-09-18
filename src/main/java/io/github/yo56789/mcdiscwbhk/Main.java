@@ -3,8 +3,6 @@ package io.github.yo56789.mcdiscwbhk;
 import io.github.yo56789.mcdiscwbhk.config.Config;
 import io.github.yo56789.mcdiscwbhk.data.Colors;
 import net.fabricmc.api.DedicatedServerModInitializer;
-import net.fabricmc.api.ModInitializer;
-
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -22,16 +20,18 @@ public class Main implements DedicatedServerModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final String MODID = "mcdiscwbhk";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+	public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
 	@Override
 	public void onInitializeServer() {
 		Config.init();
 
-		ServerMessageEvents.CHAT_MESSAGE.register((SignedMessage message, ServerPlayerEntity sender, MessageType.Parameters params) -> {
-			String data = WebhookHandler.assembleMessage(message.getContent().getString(), sender.getName().getString(), Colors.BLUE.colorCode, sender.getUuidAsString());
-			WebhookHandler.post(Config.WEBHOOK_URI, data);
-		});
+		if (Config.EVENT_PLAYER_MESSAGE_ENABLED) {
+			ServerMessageEvents.CHAT_MESSAGE.register((SignedMessage message, ServerPlayerEntity sender, MessageType.Parameters params) -> {
+				String data = WebhookHandler.assembleMessage(message.getContent().getString(), sender.getName().getString(), Colors.BLUE.colorCode, sender.getUuidAsString());
+				WebhookHandler.post(Config.WEBHOOK_URI, data);
+			});
+		}
 
 		if (Config.EVENT_SERVER_STARTING_ENABLED) {
 			ServerLifecycleEvents.SERVER_STARTING.register((MinecraftServer server) -> {
