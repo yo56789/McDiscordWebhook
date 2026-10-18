@@ -1,7 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.146'
+    id 'net.neoforged.moddev' version '2.0.148'
     id 'idea'
 }
 
@@ -79,6 +79,7 @@ configurations {
 }
 
 dependencies {
+    annotationProcessor "systems.manifold:manifold-preprocessor:2026.1.15"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
@@ -112,8 +113,14 @@ publishing {
     }
 }
 
+def mc_version = properties.minecraft_version.replace(".", "")
+
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' 
+    options.encoding = 'UTF-8'
+    it.options.compilerArgs += [
+            "-Xplugin:Manifold",
+            "-AMC_VER=$mc_version"
+    ]
 }
 
 idea {

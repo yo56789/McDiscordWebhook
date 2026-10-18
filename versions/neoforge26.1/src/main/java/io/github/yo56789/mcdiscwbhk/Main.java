@@ -33,7 +33,11 @@ public class Main {
     public Main(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.register(this);
 
-        modContainer.registerConfig(ModConfig.Type.COMMON, NeoConfig.CONFIG_SPEC);
+        #if MC_VER >= "26.3"
+            modContainer.registerConfig(ModConfig.Type.LOCAL, NeoConfig.CONFIG_SPEC);
+        #else
+            modContainer.registerConfig(ModConfig.Type.COMMON, NeoConfig.CONFIG_SPEC);
+        #endif
     }
 
     @SubscribeEvent

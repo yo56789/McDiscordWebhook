@@ -3,7 +3,6 @@ package io.github.yo56789.mcdiscwbhk;
 import io.github.yo56789.wbhkcommon.WbhkCommon;
 import io.github.yo56789.wbhkcommon.config.Config;
 import net.fabricmc.api.DedicatedServerModInitializer;
-import net.fabricmc.api.ModInitializer;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
@@ -12,7 +11,6 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.PlayerChatMessage;
-import net.minecraft.resources.Identifier;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,6 +26,7 @@ public class Main implements DedicatedServerModInitializer {
 
 	@Override
 	public void onInitializeServer() {
+
 		WbhkCommon.init(FabricLoader.getInstance().getConfigDir(), Executors.newVirtualThreadPerTaskExecutor());
 
 		if (Config.EVENT_PLAYER_MESSAGE_ENABLED) {
