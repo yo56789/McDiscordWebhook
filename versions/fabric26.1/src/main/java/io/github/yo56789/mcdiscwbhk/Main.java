@@ -4,6 +4,8 @@ import io.github.yo56789.wbhkcommon.WbhkCommon;
 import io.github.yo56789.wbhkcommon.config.Config;
 import net.fabricmc.api.DedicatedServerModInitializer;
 
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -15,6 +17,9 @@ import net.minecraft.network.chat.PlayerChatMessage;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.LivingEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,6 +73,14 @@ public class Main implements DedicatedServerModInitializer {
 		if (Config.EVENT_PLAYER_LEAVE_ENABLED) {
 			ServerPlayConnectionEvents.DISCONNECT.register((ServerGamePacketListenerImpl handler, MinecraftServer server) -> {
 				WbhkCommon.playerLeaveEvent(handler.getPlayer().getPlainTextName());
+			});
+		}
+
+		if (Config.EVENT_PLAYER_DIED_ENABLED) {
+			ServerLivingEntityEvents.AFTER_DEATH.register((LivingEntity entity, DamageSource damageSource) -> {
+				if (entity.is(EntityTypes.PLAYER)) {
+					WbhkCommon.playerDiedEvent(damageSource.getLocalizedDeathMessage(entity).getString());
+				}
 			});
 		}
 	}

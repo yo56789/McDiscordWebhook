@@ -6,6 +6,12 @@ McDiscordWebhook integrates your discord server into your minecraft without usin
 ![GitHub repo size](https://img.shields.io/github/repo-size/yo56789/McDiscordWebhook)
 ![Static Badge](https://img.shields.io/badge/download-Modrinth-green)
 
+## Currently Supported Versions
+| Loader   | Versions   |
+|----------|------------|
+| Fabric   | 1.21, 26.* |
+| Neoforge | 1.21, 26.* |
+
 ## Quick Start
 Install the mod, and run it for the first time. The mod will generate a `config/mcdiscwbhk.properties` file with mod configuration in it.
 Modify these properties to suit your needs.
