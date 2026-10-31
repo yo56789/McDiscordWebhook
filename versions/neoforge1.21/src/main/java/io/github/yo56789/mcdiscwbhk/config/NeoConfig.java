@@ -68,6 +68,10 @@ public class NeoConfig
     private static final ModConfigSpec.ConfigValue<String> EVENT_PLAYER_LEAVE = BUILDER
             .define("event-player-leave-message", "%s left!");
 
+    private static final ModConfigSpec.BooleanValue EVENT_PLAYER_DIED_ENABLED = BUILDER
+            .comment("Player death")
+            .define("event-player-died-enabled", true);
+
     public static final ModConfigSpec SPEC = BUILDER.build();
 
     @SubscribeEvent
@@ -76,7 +80,7 @@ public class NeoConfig
                 WEBHOOK_MODE.get(), CLASSIC_MESSAGE_FORMAT.get(), EVENT_PLAYER_MESSAGE_ENABLED.get(), EVENT_SERVER_STARTING_ENABLED.get(),
                 EVENT_SERVER_STARTING.get(), EVENT_SERVER_STARTED_ENABLED.get(), EVENT_SERVER_STARTED.get(), EVENT_SERVER_STOPPING_ENABLED.get(),
                 EVENT_SERVER_STOPPING.get(), EVENT_SERVER_STOPPED_ENABLED.get(), EVENT_SERVER_STOPPED.get(), EVENT_PLAYER_JOIN_ENABLED.get(),
-                EVENT_PLAYER_JOIN.get(), EVENT_PLAYER_LEAVE_ENABLED.get(), EVENT_PLAYER_LEAVE.get());
+                EVENT_PLAYER_JOIN.get(), EVENT_PLAYER_LEAVE_ENABLED.get(), EVENT_PLAYER_LEAVE.get(), EVENT_PLAYER_DIED_ENABLED.get());
     }
 
     private static boolean verifyWebhookMode(final Object obj) {

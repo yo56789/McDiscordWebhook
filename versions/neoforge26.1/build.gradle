@@ -79,7 +79,7 @@ configurations {
 }
 
 dependencies {
-    annotationProcessor "systems.manifold:manifold-preprocessor:2026.1.15"
+    annotationProcessor "systems.manifold:manifold-preprocessor:2026.1.16"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

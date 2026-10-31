@@ -3,10 +3,12 @@ package io.github.yo56789.mcdiscwbhk;
 import io.github.yo56789.mcdiscwbhk.config.NeoConfig;
 import io.github.yo56789.wbhkcommon.WbhkCommon;
 import io.github.yo56789.wbhkcommon.config.Config;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.ServerChatEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStoppedEvent;
@@ -69,6 +71,10 @@ public class Main {
         if (Config.EVENT_PLAYER_LEAVE_ENABLED) {
             NeoForge.EVENT_BUS.addListener(Main::onPlayerLeave);
         }
+
+        if (Config.EVENT_PLAYER_DIED_ENABLED) {
+            NeoForge.EVENT_BUS.addListener(Main::onPlayerDied);
+        }
     }
 
     private static void onPlayerMessage(ServerChatEvent event) {
@@ -97,5 +103,11 @@ public class Main {
 
     private static void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
         WbhkCommon.playerLeaveEvent(event.getEntity().getName().getString());
+    }
+
+    private static void onPlayerDied(LivingDeathEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            WbhkCommon.playerDiedEvent(event.getSource().getLocalizedDeathMessage(player).getString());
+        }
     }
 }

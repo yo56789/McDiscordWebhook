@@ -37,6 +37,8 @@ public class NeoConfig {
     public final ModConfigSpec.ConfigValue<Boolean> eventPlayerLeaveEnabled;
     public final ModConfigSpec.ConfigValue<String> eventPlayerLeave;
 
+    public final ModConfigSpec.ConfigValue<Boolean> eventPlayerDiedEnabled;
+
     private NeoConfig(ModConfigSpec.Builder builder) {
         webhookUri = add(builder, "webhook-uri", "", "Discord webhook URI", "How to get a webhook: https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks");
         serverName = add(builder, "server-webhook-name", "Server", "Server name", "Can be set to anything, and shows for server-related events");
@@ -64,6 +66,8 @@ public class NeoConfig {
 
         eventPlayerLeaveEnabled = add(builder, "event-player-leave-enabled", true, "Player leave", "%s = username of player");
         eventPlayerLeave = add(builder, "event-player-leave-message", "%s left!");
+
+        eventPlayerDiedEnabled = add(builder, "event-player-died-enabled", true, "Player death");
     }
 
     public static void init() {
@@ -72,7 +76,7 @@ public class NeoConfig {
                 CONFIG.eventServerStarting.get(), CONFIG.eventServerStartedEnabled.get(), CONFIG.eventServerStarted.get(),
                 CONFIG.eventServerStoppingEnabled.get(), CONFIG.eventServerStopping.get(), CONFIG.eventServerStoppedEnabled.get(),
                 CONFIG.eventServerStopped.get(), CONFIG.eventPlayerJoinEnabled.get(), CONFIG.eventPlayerJoin.get(),
-                CONFIG.eventPlayerLeaveEnabled.get(), CONFIG.eventPlayerLeave.get());
+                CONFIG.eventPlayerLeaveEnabled.get(), CONFIG.eventPlayerLeave.get(), CONFIG.eventPlayerDiedEnabled.get());
     }
 
     private static ModConfigSpec.ConfigValue<String> add(ModConfigSpec.Builder builder, String path, String defaultValue) {

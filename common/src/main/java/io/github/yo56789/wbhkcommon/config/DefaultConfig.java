@@ -54,5 +54,9 @@ public class DefaultConfig {
             # Player leave
             # %s = username of player
             event-player-leave-enabled=true
-            event-player-leave-message=%s left!""";
+            event-player-leave-message=%s left!
+            
+            # Player death
+            event-player-died-enabled=true
+            """;
 }

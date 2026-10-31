@@ -3,6 +3,7 @@ package io.github.yo56789.mcdiscwbhk;
 import io.github.yo56789.mcdiscwbhk.config.NeoConfig;
 import io.github.yo56789.wbhkcommon.WbhkCommon;
 import io.github.yo56789.wbhkcommon.config.Config;
+import net.minecraft.world.entity.EntityTypes;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.config.ModConfig;
@@ -10,6 +11,7 @@ import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.ServerChatEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
@@ -33,10 +35,10 @@ public class Main {
     public Main(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.register(this);
 
-        #if MC_VER >= "26.3"
-            modContainer.registerConfig(ModConfig.Type.LOCAL, NeoConfig.CONFIG_SPEC);
-        #else
+        #if MC_VER < "263"
             modContainer.registerConfig(ModConfig.Type.COMMON, NeoConfig.CONFIG_SPEC);
+        #else
+            modContainer.registerConfig(ModConfig.Type.LOCAL, NeoConfig.CONFIG_SPEC);
         #endif
     }
 
@@ -76,6 +78,10 @@ public class Main {
         if (Config.EVENT_PLAYER_LEAVE_ENABLED) {
             NeoForge.EVENT_BUS.addListener(Main::onPlayerLeave);
         }
+
+        if (Config.EVENT_PLAYER_DIED_ENABLED) {
+            NeoForge.EVENT_BUS.addListener(Main::onPlayerDied);
+        }
     }
 
     private static void onPlayerMessage(ServerChatEvent event) {
@@ -104,5 +110,11 @@ public class Main {
 
     private static void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
         WbhkCommon.playerLeaveEvent(event.getEntity().getName().getString());
+    }
+
+    private static void onPlayerDied(LivingDeathEvent event) {
+        if (event.getEntity().is(EntityTypes.PLAYER)) {
+            WbhkCommon.playerDiedEvent(event.getSource().getLocalizedDeathMessage(event.getEntity()).getString());
+        }
     }
 }

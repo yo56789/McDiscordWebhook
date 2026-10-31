@@ -51,4 +51,9 @@ public class WbhkCommon {
         String data = WebhookHandler.assembleMessage(String.format(Config.EVENT_PLAYER_LEAVE, playerName), Config.SERVER_NAME, Colors.RED.colorCode);
         WebhookHandler.post(data);
     }
+
+    public static void playerDiedEvent(String reason) {
+        String data = WebhookHandler.assembleMessage(reason, Config.SERVER_NAME, Colors.RED.colorCode);
+        WebhookHandler.post(data);
+    }
 }

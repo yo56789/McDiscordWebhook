@@ -34,6 +34,8 @@ public class Config {
     public static boolean EVENT_PLAYER_LEAVE_ENABLED;
     public static String EVENT_PLAYER_LEAVE;
 
+    public static boolean EVENT_PLAYER_DIED_ENABLED;
+
     public static void init(Path path) {
         SimpleConfig config = SimpleConfig.of("mcdiscwbhk", path).provider((String name) -> DefaultConfig.DEFAULTCONFIG).request();
 
@@ -42,11 +44,12 @@ public class Config {
                 config.getOrDefault("event-server-starting-enabled",  false),config.getOrDefault("event-server-starting-message", "Server Starting!"), config.getOrDefault("event-server-started-enabled", true),
                 config.getOrDefault("event-server-started-message", "Server Started!"), config.getOrDefault("event-server-stopping-enabled", false), config.getOrDefault("event-server-stopping-message", "Server Stopping!"),
                 config.getOrDefault("event-server-stopped-enabled", true), config.getOrDefault("event-server-stopped-message", "Server Stopped!"), config.getOrDefault("event-player-join-enabled", true),
-                config.getOrDefault("event-player-join-message", "%s joined!"), config.getOrDefault("event-player-leave-enabled", true), config.getOrDefault("event-player-leave-message", "%s left!"));
+                config.getOrDefault("event-player-join-message", "%s joined!"), config.getOrDefault("event-player-leave-enabled", true), config.getOrDefault("event-player-leave-message", "%s left!"),
+                config.getOrDefault("event-player-died-enabled", true));
     }
 
-    // 18 inputs :)
-    public static void init(String webhookURI, String serverName, String userAvatarUrl, String webhookMode, String classicMessageFormat, boolean eventPlayerMessageEnabled, boolean eventServerStartingEnabled, String eventServerStarting, boolean eventServerStartedEnabled, String eventServerStarted, boolean eventServerStoppingEnabled, String eventServerStopping, boolean eventServerStoppedEnabled, String eventServerStopped, boolean eventServerJoinEnabled, String eventServerJoin, boolean eventServerLeaveEnabled, String eventServerLeave) {
+    // 19 inputs :)
+    public static void init(String webhookURI, String serverName, String userAvatarUrl, String webhookMode, String classicMessageFormat, boolean eventPlayerMessageEnabled, boolean eventServerStartingEnabled, String eventServerStarting, boolean eventServerStartedEnabled, String eventServerStarted, boolean eventServerStoppingEnabled, String eventServerStopping, boolean eventServerStoppedEnabled, String eventServerStopped, boolean eventServerJoinEnabled, String eventServerJoin, boolean eventServerLeaveEnabled, String eventServerLeave, boolean eventPlayerDied) {
         WEBHOOK_URI = webhookURI;
         SERVER_NAME = serverName;
         USER_AVATAR_URL = userAvatarUrl;
@@ -73,6 +76,8 @@ public class Config {
 
         EVENT_PLAYER_LEAVE_ENABLED = eventServerLeaveEnabled;
         EVENT_PLAYER_LEAVE = eventServerLeave;
+
+        EVENT_PLAYER_DIED_ENABLED = eventPlayerDied;
 
         // Protection in-case logs are shared.
         // Many log-sharing websites don't recognise links as something that should be filtered.
